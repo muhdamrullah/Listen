@@ -6,12 +6,15 @@ def voice2Audio():
     print("Recording speech 10secs")
     subprocess.call(['arecord', '-f', 'cd', '-t', 'wav', '-d', '5', '-q', '-r', '16000', '-c', '1', 'audio.wav'])
 
+def playVideo():
+    subprocess.call(['mplayer', '-fs', 'DynabitesPlayMini.mov'])
+
 def audio2Text():
     r = sr.Recognizer()
     with sr.WavFile("audio.wav") as source:
         audio = r.record(source)
 
-    list = ['az', 'damn it', 'ass', 'fz', 'sz', 'damn', 'god', 'stupid', 'oh my god', 'no']
+    listVulgar = ['az', 'bz', 'cz', 'dz', 'ez', 'fz', 'gz', 'hz', 'iz', 'jz', 'kz', 'lz', 'mz', 'nz', 'oz,', 'pz', 'qz', 'rz', 'sz', 'tz', 'uz', 'vz', 'wz', 'xz', 'yz', 'zz', 'damn', 'ass', 'god', 'stupid', 'no']
 
     try:
 	print("Transcribing...")
@@ -20,8 +23,11 @@ def audio2Text():
 	replace = re.sub("[*]", 'z ', x)
         wordList = re.sub("[^\w]", " ", replace).split()
 	print wordList
-	if any(i in wordList for i in list):
+
+#Executes the command here
+	if any(i in wordList for i in listVulgar):
             print 'YOU DIE!'
+	    playVideo()
         
     except LookupError:
         print("Could not understand audio")
